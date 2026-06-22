@@ -98,8 +98,68 @@ function App() {
     { id: 5, image: '/1 (5).jpg', alt: 'Look Bem Zânza 5' }
   ];
 
+  const testimonials = [
+    {
+      id: 1,
+      text: "Meninas, podem comprar sem medo! As saias 100% algodão são perfeitas, o caimento é impecável e minhas clientes tão levando de 3 em 3. Acabamento surreal, não fica transparente.",
+      name: "Juliana T.",
+      role: "Dona de Boutique em MG",
+      initial: "J"
+    },
+    {
+      id: 2,
+      text: "Chegou super rápido! Pedi um lote com 15 peças pra testar a qualidade das camisetas e vendi tudo na primeira semana. A margem de lucro é muito boa, já tô pedindo reposição hoje mesmo.",
+      name: "Amanda S.",
+      role: "Revendedora Autônoma",
+      initial: "A"
+    },
+    {
+      id: 3,
+      text: "Eu tinha muito medo de comprar atacado pela internet e vir tecido ruim, mas a Bem Zânza me surpreendeu. O tecido é muito fresco, as costuras são lisinhas. Minhas clientes amaram as calças!",
+      name: "Carla M.",
+      role: "Lojista em SP",
+      initial: "C"
+    },
+    {
+      id: 4,
+      text: "Gente do céu, o que são esses broches?? Comprei pra dar um charme nas camisetas básicas e virou febre aqui na loja. Dá um ar super chique pra peça. Atendimento top pelo WhatsApp também.",
+      name: "Beatriz R.",
+      role: "Dona de Loja Online",
+      initial: "B"
+    }
+  ];
+
+  const testimonialsRef = useRef(null);
+
+  const scrollNextTestimonial = () => {
+    if (testimonialsRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = testimonialsRef.current;
+      if (scrollLeft + clientWidth >= scrollWidth - 10) {
+        testimonialsRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        const slideWidth = testimonialsRef.current.children[0].clientWidth;
+        testimonialsRef.current.scrollBy({ left: slideWidth + 20, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const scrollPrevTestimonial = () => {
+    if (testimonialsRef.current) {
+      const { scrollLeft, scrollWidth } = testimonialsRef.current;
+      if (scrollLeft <= 10) {
+        testimonialsRef.current.scrollTo({ left: scrollWidth, behavior: 'smooth' });
+      } else {
+        const slideWidth = testimonialsRef.current.children[0].clientWidth;
+        testimonialsRef.current.scrollBy({ left: -(slideWidth + 20), behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <div className="app">
+      <div className="top-banner">
+        🔥 Catálogo atualizado hoje: Algumas estampas já estão esgotando. Garanta o seu lote com envio rápido!
+      </div>
       {/* Header */}
       <header className={`header ${scrolled ? 'shadow-md' : ''}`}>
         <div className="container">
@@ -156,6 +216,13 @@ function App() {
         </div>
       </section>
 
+      {/* Profit Banner */}
+      <div className="profit-banner">
+        <div className="container">
+          <p>Trabalhe com peças de alto giro e <strong>margem de lucro de até 100%</strong>. Nossas saias e camisetas 100% algodão são desejo absoluto entre as clientes.</p>
+        </div>
+      </div>
+
       {/* Features */}
       <section className="features">
         <div className="container">
@@ -186,6 +253,33 @@ function App() {
                 <h3>Atacado e Varejo</h3>
                 <p>Condições exclusivas para você revender ou usar, com envio para todo o Brasil.</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Steps Section */}
+      <section className="steps-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Comprar no atacado é fácil e rápido</h2>
+            <p>Sem burocracia. Veja como abastecer sua loja em 3 passos simples.</p>
+          </div>
+          <div className="steps-grid">
+            <div className="step-card">
+              <div className="step-number">1</div>
+              <h3>Chame no WhatsApp</h3>
+              <p>Fale com nossa consultora e receba o catálogo com as peças disponíveis hoje.</p>
+            </div>
+            <div className="step-card">
+              <div className="step-number">2</div>
+              <h3>Monte seu Pedido</h3>
+              <p>Escolha no mínimo 6 peças (pode mesclar saias, camisetas, calças e broches).</p>
+            </div>
+            <div className="step-card">
+              <div className="step-number">3</div>
+              <h3>Receba na sua Loja</h3>
+              <p>Enviamos para todo o Brasil. Você também pode retirar na nossa loja física.</p>
             </div>
           </div>
         </div>
@@ -305,6 +399,47 @@ function App() {
           </div>
           
 
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="testimonials-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>O que nossas revendedoras dizem</h2>
+            <p>Histórias reais de quem confia e lucra revendendo Bem Zânza.</p>
+          </div>
+          
+          <div className="carousel-container">
+            <button className="carousel-btn prev" onClick={scrollPrevTestimonial} aria-label="Anterior">
+              <ChevronLeft size={24} />
+            </button>
+            <div className="carousel-track-wrapper" ref={testimonialsRef}>
+              {testimonials.map((test) => (
+                <div key={test.id} className="testimonial-card">
+                  <div className="testimonial-quote">"</div>
+                  <div className="testimonial-stars">
+                    <Star size={16} fill="currentColor" stroke="none" />
+                    <Star size={16} fill="currentColor" stroke="none" />
+                    <Star size={16} fill="currentColor" stroke="none" />
+                    <Star size={16} fill="currentColor" stroke="none" />
+                    <Star size={16} fill="currentColor" stroke="none" />
+                  </div>
+                  <div className="testimonial-text">{test.text}</div>
+                  <div className="testimonial-author">
+                    <div className="testimonial-avatar">{test.initial}</div>
+                    <div className="testimonial-author-info">
+                      <h4>{test.name}</h4>
+                      <span>{test.role}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button className="carousel-btn next" onClick={scrollNextTestimonial} aria-label="Próximo">
+              <ChevronRight size={24} />
+            </button>
+          </div>
         </div>
       </section>
 
