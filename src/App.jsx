@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   ShoppingBag, 
   CheckCircle,
@@ -23,6 +23,31 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const carouselRef = useRef(null);
+
+  const scrollNext = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      if (scrollLeft + clientWidth >= scrollWidth - 10) {
+        carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        const slideWidth = carouselRef.current.children[0].clientWidth;
+        carouselRef.current.scrollBy({ left: slideWidth + 20, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const scrollPrev = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth } = carouselRef.current;
+      if (scrollLeft <= 10) {
+        carouselRef.current.scrollTo({ left: scrollWidth, behavior: 'smooth' });
+      } else {
+        const slideWidth = carouselRef.current.children[0].clientWidth;
+        carouselRef.current.scrollBy({ left: -(slideWidth + 20), behavior: 'smooth' });
+      }
+    }
+  };
 
   const openLightbox = (index) => {
     setSelectedImageIndex(index);
@@ -66,14 +91,11 @@ function App() {
   const wpFlutuante = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msgFlutuante)}`;
 
   const looks = [
-    { id: 1, image: '/1.jpg', alt: 'Look Bem Zânza 1' },
-    { id: 2, image: '/2.jpg', alt: 'Look Bem Zânza 2' },
-    { id: 3, image: '/3.jpg', alt: 'Look Bem Zânza 3' },
-    { id: 4, image: '/4.jpg', alt: 'Look Bem Zânza 4' },
-    { id: 5, image: '/5.jpg', alt: 'Look Bem Zânza 5' },
-    { id: 6, image: '/6.jpg', alt: 'Look Bem Zânza 6' },
-    { id: 7, image: '/7.jpg', alt: 'Look Bem Zânza 7' },
-    { id: 8, image: '/8.jpg', alt: 'Look Bem Zânza 8' }
+    { id: 1, image: '/1 (1).jpg', alt: 'Look Bem Zânza 1' },
+    { id: 2, image: '/1 (2).jpg', alt: 'Look Bem Zânza 2' },
+    { id: 3, image: '/1 (3).jpg', alt: 'Look Bem Zânza 3' },
+    { id: 4, image: '/1 (4).jpg', alt: 'Look Bem Zânza 4' },
+    { id: 5, image: '/1 (5).jpg', alt: 'Look Bem Zânza 5' }
   ];
 
   return (
@@ -114,7 +136,7 @@ function App() {
           <div className="hero-image-wrapper animate-fade-in delay-200">
             <div className="hero-decor"></div>
             <img 
-              src="/6.jpg" 
+              src="/1 (1).jpg" 
               alt="Modelo Bem Zânza" 
               className="hero-main-image"
               style={{
@@ -143,8 +165,8 @@ function App() {
                 <Heart size={28} />
               </div>
               <div className="feature-text">
-                <h3>Conforto Diário</h3>
-                <p>Moda casual pensada para o seu bem-estar o dia todo.</p>
+                <h3>100% Algodão</h3>
+                <p>Respirabilidade e toque macio que só os tecidos naturais oferecem.</p>
               </div>
             </div>
             <div className="feature-card delay-100">
@@ -152,8 +174,8 @@ function App() {
                 <CheckCircle size={28} />
               </div>
               <div className="feature-text">
-                <h3>Qualidade Premium</h3>
-                <p>Tecidos selecionados e acabamento impecável em cada peça.</p>
+                <h3>Produção Premium</h3>
+                <p>Acabamento impecável, desde as costuras até os mínimos detalhes.</p>
               </div>
             </div>
             <div className="feature-card delay-200">
@@ -161,8 +183,8 @@ function App() {
                 <Truck size={28} />
               </div>
               <div className="feature-text">
-                <h3>Envio para todo Brasil</h3>
-                <p>Receba suas peças no conforto de casa ou na sua loja física.</p>
+                <h3>Atacado e Varejo</h3>
+                <p>Condições exclusivas para você revender ou usar, com envio para todo o Brasil.</p>
               </div>
             </div>
           </div>
@@ -177,29 +199,36 @@ function App() {
             <p>Conheça a essência da Bem Zânza. Peças versáteis, confortáveis e atemporais, perfeitas para compor looks incríveis no dia a dia.</p>
           </div>
           
-          <div className="lookbook-grid">
-            {looks.map((look, index) => (
-              <div key={look.id} className="look-card" onClick={() => openLightbox(index)}>
-                <div className="look-image-container">
-                  {/* Se a imagem não carregar, mostra o placeholder */}
-                  <img 
-                    src={look.image} 
-                    alt={look.alt} 
-                    className="look-img"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
-                    }}
-                  />
-                  <div className="look-placeholder" style={{display: 'none'}}>
-                    [Foto {look.id}]
-                  </div>
-                  <div className="look-overlay">
-                    <Heart size={24} color="white" />
+          <div className="carousel-container">
+            <button className="carousel-btn prev" onClick={scrollPrev} aria-label="Anterior">
+              <ChevronLeft size={24} />
+            </button>
+            <div className="carousel-track-wrapper" ref={carouselRef}>
+              {looks.map((look, index) => (
+                <div key={look.id} className="look-card carousel-slide" onClick={() => openLightbox(index)}>
+                  <div className="look-image-container">
+                    <img 
+                      src={look.image} 
+                      alt={look.alt} 
+                      className="look-img"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="look-placeholder" style={{display: 'none'}}>
+                      [Foto {look.id}]
+                    </div>
+                    <div className="look-overlay">
+                      <Heart size={24} color="white" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <button className="carousel-btn next" onClick={scrollNext} aria-label="Próximo">
+              <ChevronRight size={24} />
+            </button>
           </div>
           
           <div className="lookbook-action">
@@ -221,31 +250,31 @@ function App() {
           
           <div className="categories-grid">
             <div className="category-card">
-              <h3 style={{ color: 'var(--primary-blue)' }}>Feminino</h3>
-              <p>O sonho de toda mulher, armário sempre renovado.</p>
+              <h3>Saias 100% Algodão</h3>
+              <p>Caimento perfeito e frescor inigualável para compor looks elegantes.</p>
               <div className="category-img-wrapper">
-                <img src="/2.jpg" alt="Feminino" />
+                <img src="/1 (2).jpg" alt="Saias 100% Algodão" />
               </div>
             </div>
             <div className="category-card">
-              <h3 style={{ color: 'var(--primary-red)' }}>Moda Casual</h3>
-              <p>Roupas versáteis para todos os gostos e idades.</p>
+              <h3>Camisetas 100% Algodão</h3>
+              <p>O básico essencial, com toque incrivelmente macio e durabilidade superior.</p>
               <div className="category-img-wrapper">
-                <img src="/3.jpg" alt="Moda Casual" />
+                <img src="/1 (3).jpg" alt="Camisetas 100% Algodão" />
               </div>
             </div>
             <div className="category-card">
-              <h3 style={{ color: 'var(--primary-blue)' }}>Essenciais</h3>
-              <p>Itens exclusivos para o seu guarda-roupa você encontra aqui.</p>
+              <h3>Calças</h3>
+              <p>Modelagens atemporais e confortáveis que valorizam o corpo feminino.</p>
               <div className="category-img-wrapper">
-                <img src="/4.jpg" alt="Essenciais" />
+                <img src="/1 (4).jpg" alt="Calças" />
               </div>
             </div>
             <div className="category-card">
-              <h3 style={{ color: 'var(--primary-red)' }}>Lançamentos</h3>
-              <p>Peças incríveis para o seu look no dia a dia.</p>
+              <h3>Broches Exclusivos</h3>
+              <p>O detalhe indispensável que transforma e enriquece qualquer peça básica.</p>
               <div className="category-img-wrapper">
-                <img src="/5.jpg" alt="Lançamentos" />
+                <img src="/1 (5).jpg" alt="Broches" />
               </div>
             </div>
           </div>
@@ -264,11 +293,11 @@ function App() {
             <div className="stat-card">
               <Shirt size={60} color="var(--primary-red)" strokeWidth={1.5} />
               <span className="stat-prefix">Mais de</span>
-              <span className="stat-number" style={{ color: 'var(--primary-red)' }}>50.000</span>
+              <span className="stat-number" style={{ color: 'var(--primary-blue)' }}>50.000</span>
               <span className="stat-suffix">peças enviadas anualmente</span>
             </div>
             <div className="stat-card">
-              <ShoppingBag size={60} color="var(--primary-blue)" strokeWidth={1.5} />
+              <ShoppingBag size={60} color="var(--primary-red)" strokeWidth={1.5} />
               <span className="stat-prefix">Mais de</span>
               <span className="stat-number" style={{ color: 'var(--primary-blue)' }}>5.000</span>
               <span className="stat-suffix">revendedoras pelo Brasil</span>
@@ -276,6 +305,35 @@ function App() {
           </div>
           
 
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="faq-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Dúvidas Frequentes</h2>
+            <p>Tudo o que você precisa saber para se tornar nossa cliente e revendedora.</p>
+          </div>
+          
+          <div className="faq-grid">
+            <div className="faq-item">
+              <h4>Como funciona o atacado?</h4>
+              <p>O pedido mínimo para compras no atacado é de apenas 6 peças. Você pode mesclar as saias 100% algodão, camisetas, calças e broches conforme a necessidade da sua loja.</p>
+            </div>
+            <div className="faq-item">
+              <h4>As peças são mesmo 100% algodão?</h4>
+              <p>Sim! Nosso grande diferencial são as saias e camisetas fabricadas em tecido 100% algodão, garantindo conforto térmico, durabilidade e caimento premium.</p>
+            </div>
+            <div className="faq-item">
+              <h4>Como é feito o envio?</h4>
+              <p>Enviamos para todo o Brasil através de transportadoras parceiras e Correios. Você também pode optar por retirar o seu pedido presencialmente em nossa loja física no Brás.</p>
+            </div>
+            <div className="faq-item">
+              <h4>Posso comprar no varejo para uso próprio?</h4>
+              <p>Claro! Atendemos tanto atacadistas quanto clientes finais (varejo) diretamente em nossa loja física em São Paulo ou agendando seu pedido pelo WhatsApp.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -388,7 +446,6 @@ function App() {
               <ul>
                 <li><a href="#inicio">Início</a></li>
                 <li><a href="#colecao">Coleção</a></li>
-                <li><a href="#sobre">Quem Somos</a></li>
                 <li><a href={wpContato}>Contato</a></li>
               </ul>
             </div>

@@ -85,7 +85,7 @@
 .hero-tag {
   display: inline-block;
   padding: 6px 12px;
-  background-color: rgba(198, 31, 38, 0.1);
+  background-color: rgba(164, 92, 83, 0.1);
   color: var(--primary-red);
   border-radius: 20px;
   font-size: 0.85rem;
@@ -130,7 +130,7 @@
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background-color: rgba(20, 92, 164, 0.05);
+  background-color: rgba(35, 48, 61, 0.05);
   top: -50px;
   right: -50px;
   z-index: 0;
@@ -170,7 +170,7 @@
 }
 
 .feature-icon {
-  background-color: rgba(198, 31, 38, 0.1);
+  background-color: rgba(164, 92, 83, 0.1);
   color: var(--primary-red);
   padding: 15px;
   border-radius: 50%;
@@ -213,12 +213,67 @@
   margin: 0 auto;
 }
 
-.lookbook-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-auto-rows: 450px;
-  gap: 20px;
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
   margin-bottom: 40px;
+}
+
+.carousel-track-wrapper {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  gap: 20px;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.carousel-track-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Edge */
+}
+
+.carousel-slide {
+  scroll-snap-align: start;
+  flex: 0 0 calc(25% - 15px);
+  width: calc(25% - 15px);
+  aspect-ratio: 3 / 4;
+  height: auto;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--white);
+  color: var(--primary-blue);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+  transition: var(--transition);
+}
+
+.carousel-btn:hover {
+  background-color: var(--primary-red);
+  color: var(--white);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.prev {
+  left: -25px;
+}
+
+.carousel-btn.next {
+  right: -25px;
 }
 
 .look-card {
@@ -271,7 +326,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, rgba(198, 31, 38, 0.4), transparent);
+  background: linear-gradient(to top, rgba(164, 92, 83, 0.4), transparent);
   opacity: 0;
   transition: var(--transition);
   display: flex;
@@ -399,6 +454,44 @@
   margin-top: 40px;
 }
 
+/* FAQ Section */
+.faq-section {
+  padding: 80px 0;
+  background-color: var(--bg-darker);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background-color: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.faq-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.faq-item h4 {
+  color: var(--primary-blue);
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.faq-item p {
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
 /* CTA Section */
 .cta-section {
   background: linear-gradient(135deg, var(--primary-blue), #0d4279);
@@ -471,7 +564,7 @@
 }
 
 .contact-icon-wrapper {
-  background-color: rgba(20, 92, 164, 0.1);
+  background-color: rgba(35, 48, 61, 0.1);
   color: var(--primary-blue);
   width: 50px;
   height: 50px;
@@ -708,6 +801,11 @@
   .social-links {
     justify-content: center;
   }
+  
+  .carousel-slide {
+    flex: 0 0 calc(33.333% - 14px);
+    width: calc(33.333% - 14px);
+  }
 }
 
 @media (max-width: 768px) {
@@ -720,6 +818,10 @@
   }
   .stat-number {
     font-size: 4rem;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
   }
 
   .mobile-menu-btn {
@@ -762,4 +864,26 @@
   .lightbox-nav.prev { left: 10px; }
   .lightbox-nav.next { right: 10px; }
   .lightbox-close { top: 15px; right: 15px; }
+
+  .carousel-slide {
+    flex: 0 0 calc(50% - 10px);
+    width: calc(50% - 10px);
+  }
+  .carousel-btn.prev {
+    left: -15px;
+  }
+  .carousel-btn.next {
+    right: -15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+  }
 }
