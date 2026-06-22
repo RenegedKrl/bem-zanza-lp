@@ -15,7 +15,8 @@ import {
   MapPin,
   Clock,
   Phone,
-  Menu
+  Menu,
+  ShieldCheck
 } from 'lucide-react';
 import './App.css';
 
@@ -24,6 +25,41 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const carouselRef = useRef(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupSeen, setPopupSeen] = useState(false);
+  const [showBubble, setShowBubble] = useState(false);
+
+  useEffect(() => {
+    const bubbleTimer = setTimeout(() => {
+      setShowBubble(true);
+    }, 10000);
+    return () => clearTimeout(bubbleTimer);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseLeave = (e) => {
+      if (e.clientY <= 0 && !popupSeen) {
+        setShowPopup(true);
+        setPopupSeen(true);
+      }
+    };
+    document.addEventListener('mouseleave', handleMouseLeave);
+    
+    // Also show after 45 seconds if they didn't exit
+    const timer = setTimeout(() => {
+      if (!popupSeen) {
+        setShowPopup(true);
+        setPopupSeen(true);
+      }
+    }, 45000);
+
+    return () => {
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      clearTimeout(timer);
+    };
+  }, [popupSeen]);
+
+  const closePopup = () => setShowPopup(false);
 
   const scrollNext = () => {
     if (carouselRef.current) {
@@ -398,7 +434,11 @@ function App() {
             </div>
           </div>
           
-
+          <div className="stats-action" style={{ textAlign: 'center', marginTop: '40px' }}>
+            <a href={wpConsultora} target="_blank" rel="noreferrer" className="btn btn-primary">
+              Seja uma Revendedora
+            </a>
+          </div>
         </div>
       </section>
 
@@ -467,6 +507,21 @@ function App() {
             <div className="faq-item">
               <h4>Posso comprar no varejo para uso próprio?</h4>
               <p>Claro! Atendemos tanto atacadistas quanto clientes finais (varejo) diretamente em nossa loja física em São Paulo ou agendando seu pedido pelo WhatsApp.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Guarantee Section */}
+      <section className="guarantee-section">
+        <div className="container">
+          <div className="guarantee-box">
+            <div className="guarantee-icon">
+              <ShieldCheck size={48} />
+            </div>
+            <div className="guarantee-content">
+              <h3>Garantia de Qualidade Risco Zero</h3>
+              <p>Sabemos que qualidade é inegociável para quem revende. Por isso, <strong>todas as nossas peças são revisadas uma a uma</strong> antes do envio. Em caso de qualquer defeito de fábrica, garantimos a troca facilitada para você focar apenas em vender.</p>
             </div>
           </div>
         </div>
@@ -609,10 +664,28 @@ function App() {
       </footer>
 
       {/* Floating WhatsApp Button */}
-      <a href={wpFlutuante} target="_blank" rel="noreferrer" className="whatsapp-float" aria-label="Chat on WhatsApp">
-        <img src="/whatsapp.png" alt="WhatsApp" style={{ width: '28px', height: '28px', filter: 'brightness(0) invert(1)' }} />
-        <span className="whatsapp-text">Fale Conosco</span>
+      <a href={wpAtacado} target="_blank" rel="noreferrer" className="floating-whatsapp">
+        {showBubble && <div className="whatsapp-bubble">Oi! Quer receber o catálogo?</div>}
+        <div className="whatsapp-icon-wrapper">
+          <img src="/whatsapp.png" alt="WhatsApp" style={{ width: '32px', height: '32px', filter: 'brightness(0) invert(1)' }} />
+        </div>
       </a>
+
+      {/* Exit Intent Popup */}
+      {showPopup && (
+        <div className="popup-overlay" onClick={closePopup}>
+          <div className="popup-content" onClick={e => e.stopPropagation()}>
+            <button className="popup-close" onClick={closePopup}><X size={24} /></button>
+            <div className="popup-badge">🎁 Bônus Exclusivo</div>
+            <h3>Espera! Não vá embora ainda...</h3>
+            <p>Que tal <strong>5% OFF + Frete Fixo</strong> no seu primeiro pedido de atacado?</p>
+            <a href={wpAtacado} target="_blank" rel="noreferrer" className="btn btn-primary popup-btn" onClick={closePopup}>
+              QUERO MEU DESCONTO AGORA
+            </a>
+            <span className="popup-disclaimer">Válido apenas para compras realizadas hoje.</span>
+          </div>
+        </div>
+      )}
 
       {/* Lightbox */}
       {selectedImageIndex !== null && (
