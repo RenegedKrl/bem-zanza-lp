@@ -162,6 +162,34 @@ function App() {
       name: "Beatriz R.",
       role: "Dona de Loja Online",
       initial: "B"
+    },
+    {
+      id: 5,
+      text: "Meninas, o tecido dessa saia é vida! Super fresquinho pra usar o dia todo e não aperta nada. Minhas clientes já tão pedindo de outras cores. Sucesso total, viu?!",
+      name: "Renata P.",
+      role: "Revendedora em GO",
+      initial: "R"
+    },
+    {
+      id: 6,
+      text: "Sério, melhor investimento! Coloquei os broches na vitrine e o pessoal pira. As peças básicas viram outra coisa. O WhatsApp deles responde rapidinho também, zero perrengue pra comprar.",
+      name: "Fernanda L.",
+      role: "Lojista em RJ",
+      initial: "F"
+    },
+    {
+      id: 7,
+      text: "Tô passada com a qualidade! Chegou tudo cheirosinho e bem embalado. A calça veste super bem e a modelagem é maravilhosa. Já vou fazer o segundo pedido da semana haha.",
+      name: "Mariana C.",
+      role: "Dona de Loja Online",
+      initial: "M"
+    },
+    {
+      id: 8,
+      text: "Gente, vendi meu primeiro lote em dois dias!!! As camisetas são de um algodão muito gostoso, não dá nem vontade de tirar do corpo. Vale cada centavo pra revender.",
+      name: "Patricia V.",
+      role: "Revendedora Autônoma",
+      initial: "P"
     }
   ];
 
@@ -232,7 +260,7 @@ function App() {
           <div className="hero-image-wrapper animate-fade-in delay-200">
             <div className="hero-decor"></div>
             <img 
-              src="/1 (1).jpg" 
+              src="/hero.png" 
               alt="Modelo Bem Zânza" 
               className="hero-main-image"
               style={{
@@ -591,7 +619,7 @@ function App() {
                       <img src="/instagram.png" alt="Instagram" style={{ width: '24px', height: '24px' }} />
                     </a>
                     <a href="https://www.facebook.com/BemZanza" target="_blank" rel="noreferrer" className="social-link" aria-label="Facebook">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1877F2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                     </a>
                   </div>
                 </div>
@@ -600,7 +628,7 @@ function App() {
             
             <div className="contact-map">
               <iframe 
-                src="https://maps.google.com/maps?q=Rua%20Eliza%20Whitaker%2059%20Sao%20Paulo&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.905485997046!2d-46.624209422921794!3d-23.53590156066052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce592b876d75ad%3A0xed6723b857cc7f7c!2sBem%20Zânza%20%7C%20Moda%20Feminina!5e0!3m2!1spt-BR!2sbr!4v1782321851154!5m2!1spt-BR!2sbr" 
                 width="100%" 
                 height="100%" 
                 style={{border: 0, borderRadius: '20px', minHeight: '400px'}} 
@@ -626,7 +654,7 @@ function App() {
                   <img src="/instagram.png" alt="Instagram" style={{ width: '20px', height: '20px' }} />
                 </a>
                 <a href="https://www.facebook.com/BemZanza" target="_blank" rel="noreferrer" className="social-link" aria-label="Facebook">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1877F2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </a>
               </div>
             </div>

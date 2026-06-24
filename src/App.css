@@ -1104,6 +1104,9 @@
   .categories-grid {
     grid-template-columns: 1fr;
   }
+  .category-img-wrapper {
+    height: 400px;
+  }
   .steps-grid {
     grid-template-columns: 1fr;
   }
