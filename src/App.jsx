@@ -37,15 +37,23 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // Só permite o popup de saída após 10 segundos no site para não assustar o usuário
+    let isReadyToExitIntent = false;
+    const readyTimer = setTimeout(() => {
+      isReadyToExitIntent = true;
+    }, 10000);
+
     const handleMouseLeave = (e) => {
-      if (e.clientY <= 0 && !popupSeen) {
+      // clientY <= 0 indica que o mouse subiu para a barra de endereços/abas
+      if (isReadyToExitIntent && e.clientY <= 0 && !popupSeen) {
         setShowPopup(true);
         setPopupSeen(true);
       }
     };
+    
     document.addEventListener('mouseleave', handleMouseLeave);
     
-    // Also show after 45 seconds if they didn't exit
+    // Mostra automaticamente após 45 segundos se não tiver saído antes
     const timer = setTimeout(() => {
       if (!popupSeen) {
         setShowPopup(true);
@@ -56,6 +64,7 @@ function App() {
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
       clearTimeout(timer);
+      clearTimeout(readyTimer);
     };
   }, [popupSeen]);
 
