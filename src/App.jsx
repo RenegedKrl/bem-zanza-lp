@@ -190,6 +190,62 @@ function App() {
       name: "Patricia V.",
       role: "Revendedora Autônoma",
       initial: "P"
+    },
+    {
+      id: 9,
+      text: "A modelagem das calças é simplesmente incrível, veste muito bem e o caimento fica perfeito. Minhas clientes estão apaixonadas, já vou fazer outro pedido hoje!",
+      name: "Camila S.",
+      role: "Lojista no PR",
+      initial: "C"
+    },
+    {
+      id: 10,
+      text: "Primeira vez comprando e já virei cliente fiel. O atendimento no WhatsApp foi super atencioso e as camisetas são de uma qualidade que não se acha em qualquer lugar.",
+      name: "Luana B.",
+      role: "Dona de Boutique em SP",
+      initial: "L"
+    },
+    {
+      id: 11,
+      text: "Os broches esgotaram na primeira semana! Que ideia genial colocar esses acessórios junto com as peças. O lucro foi certo e rápido.",
+      name: "Vanessa T.",
+      role: "Revendedora Autônoma",
+      initial: "V"
+    },
+    {
+      id: 12,
+      text: "Achei o máximo a variedade de cores das saias. O tecido de algodão é realmente diferenciado e faz muito sucesso aqui no Nordeste pelo clima quente. Recomendo muito!",
+      name: "Aline F.",
+      role: "Lojista em PE",
+      initial: "A"
+    },
+    {
+      id: 13,
+      text: "Comprei o lote mínimo de 6 peças só pra conhecer e me arrependi de não ter pego mais! As blusinhas são super confortáveis e o cheirinho que vem na caixa é maravilhoso.",
+      name: "Bruna M.",
+      role: "Dona de Loja Online",
+      initial: "B"
+    },
+    {
+      id: 14,
+      text: "Muito satisfeita com a minha compra! A margem de lucro é excelente e as clientes percebem o valor das roupas só de pegar no tecido. Acabamento impecável.",
+      name: "Daniele C.",
+      role: "Revendedora em SC",
+      initial: "D"
+    },
+    {
+      id: 15,
+      text: "Fiz um pedido grande para a minha loja e chegou antes do prazo. As peças vieram bem dobradas, tudo certinho. É muito bom encontrar fornecedor de confiança.",
+      name: "Roberta L.",
+      role: "Lojista no RS",
+      initial: "R"
+    },
+    {
+      id: 16,
+      text: "O que mais me chamou atenção foi o caimento das camisetas. Não encolhem, não desbotam e o toque é super macio. Minha clientela tá super exigente e a Bem Zânza atendeu todas as expectativas.",
+      name: "Tatiane R.",
+      role: "Revendedora Autônoma",
+      initial: "T"
     }
   ];
 
