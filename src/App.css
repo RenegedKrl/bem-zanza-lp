@@ -393,11 +393,9 @@
 }
 
 .category-img-wrapper {
-  margin-top: auto;
+  margin: auto -20px 0 -20px;
   height: 250px;
-  width: calc(100% + 40px);
-  margin-left: -20px;
-  margin-bottom: 0;
+  align-self: stretch;
   display: flex;
   align-items: flex-end;
   justify-content: center;

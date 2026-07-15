@@ -128,12 +128,14 @@ function App() {
   const msgConsultora = "Olá! Quero revender as peças da Bem Zânza e gostaria de falar com uma consultora sobre as condições especiais.";
   const msgContato = "Olá! Gostaria de entrar em contato para tirar algumas dúvidas.";
   const msgFlutuante = "Olá! Estou no site da Bem Zânza e gostaria de atendimento.";
+  const msgBrinde = "Olá! Vi a oferta no site e gostaria de garantir o meu brinde no meu primeiro pedido de atacado. Como funciona?";
   
   const wpAtacado = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msgAtacado)}`;
   const wpCatalogo = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msgCatalogo)}`;
   const wpConsultora = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msgConsultora)}`;
   const wpContato = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msgContato)}`;
   const wpFlutuante = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msgFlutuante)}`;
+  const wpBrinde = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msgBrinde)}`;
 
   const looks = [
     { id: 1, image: '/1 (1).jpg', alt: 'Look Bem Zânza 1' },
@@ -476,28 +478,28 @@ function App() {
               <h3>Saias 100% Algodão</h3>
               <p>Caimento perfeito e frescor inigualável para compor looks elegantes.</p>
               <div className="category-img-wrapper">
-                <img src="/1 (2).jpg" alt="Saias 100% Algodão" />
+                <img src="/categorias/saia_final.png" alt="Saias 100% Algodão" />
               </div>
             </div>
             <div className="category-card">
               <h3>Camisetas 100% Algodão</h3>
               <p>O básico essencial, com toque incrivelmente macio e durabilidade superior.</p>
               <div className="category-img-wrapper">
-                <img src="/1 (3).jpg" alt="Camisetas 100% Algodão" />
+                <img src="/categorias/camisa_final.png" alt="Camisetas 100% Algodão" />
               </div>
             </div>
             <div className="category-card">
               <h3>Calças</h3>
               <p>Modelagens atemporais e confortáveis que valorizam o corpo feminino.</p>
               <div className="category-img-wrapper">
-                <img src="/1 (4).jpg" alt="Calças" />
+                <img src="/categorias/calça_final.png" alt="Calças" />
               </div>
             </div>
             <div className="category-card">
               <h3>Broches Exclusivos</h3>
               <p>O detalhe indispensável que transforma e enriquece qualquer peça básica.</p>
               <div className="category-img-wrapper">
-                <img src="/1 (5).jpg" alt="Broches" />
+                <img src="/categorias/broche_final.png" alt="Broches" style={{ objectPosition: 'center' }} />
               </div>
             </div>
           </div>
@@ -517,7 +519,7 @@ function App() {
               <Shirt size={60} color="var(--primary-red)" strokeWidth={1.5} />
               <span className="stat-prefix">Mais de</span>
               <span className="stat-number" style={{ color: 'var(--primary-blue)' }}>50.000</span>
-              <span className="stat-suffix">peças enviadas anualmente</span>
+              <span className="stat-suffix">vendas totais</span>
             </div>
             <div className="stat-card">
               <ShoppingBag size={60} color="var(--primary-red)" strokeWidth={1.5} />
@@ -771,9 +773,9 @@ function App() {
             <button className="popup-close" onClick={closePopup}><X size={24} /></button>
             <div className="popup-badge">🎁 Bônus Exclusivo</div>
             <h3>Espera! Não vá embora ainda...</h3>
-            <p>Que tal <strong>5% OFF + Frete Fixo</strong> no seu primeiro pedido de atacado?</p>
-            <a href={wpAtacado} target="_blank" rel="noreferrer" className="btn btn-primary popup-btn" onClick={closePopup}>
-              QUERO MEU DESCONTO AGORA
+            <p>Que tal <strong>compre e ganhe um brinde</strong> no seu primeiro pedido de atacado?</p>
+            <a href={wpBrinde} target="_blank" rel="noreferrer" className="btn btn-primary popup-btn" onClick={closePopup}>
+              QUERO MEU BRINDE AGORA
             </a>
             <span className="popup-disclaimer">Válido apenas para compras realizadas hoje.</span>
           </div>
