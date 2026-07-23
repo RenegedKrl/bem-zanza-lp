@@ -28,6 +28,40 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [popupSeen, setPopupSeen] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
+  const [showImageTip, setShowImageTip] = useState(false);
+  const [imageTipSeen, setImageTipSeen] = useState(false);
+
+  useEffect(() => {
+    if (!carouselRef.current || imageTipSeen) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !imageTipSeen) {
+          setShowImageTip(true);
+          setImageTipSeen(true);
+          
+          setTimeout(() => {
+            setShowImageTip(false);
+          }, 4000);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(carouselRef.current);
+
+    return () => observer.disconnect();
+  }, [imageTipSeen]);
+
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      if (showImageTip) setShowImageTip(false);
+    };
+    if (showImageTip) {
+      window.addEventListener('click', handleGlobalClick);
+    }
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, [showImageTip]);
 
   useEffect(() => {
     const bubbleTimer = setTimeout(() => {
@@ -77,7 +111,9 @@ function App() {
         carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
       } else {
         const slideWidth = carouselRef.current.children[0].clientWidth;
-        carouselRef.current.scrollBy({ left: slideWidth + 20, behavior: 'smooth' });
+        const multiplier = window.innerWidth <= 768 ? 1 : 4;
+        const scrollAmount = (slideWidth + 20) * multiplier;
+        carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       }
     }
   };
@@ -89,7 +125,9 @@ function App() {
         carouselRef.current.scrollTo({ left: scrollWidth, behavior: 'smooth' });
       } else {
         const slideWidth = carouselRef.current.children[0].clientWidth;
-        carouselRef.current.scrollBy({ left: -(slideWidth + 20), behavior: 'smooth' });
+        const multiplier = window.innerWidth <= 768 ? 1 : 4;
+        const scrollAmount = (slideWidth + 20) * multiplier;
+        carouselRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       }
     }
   };
@@ -142,7 +180,17 @@ function App() {
     { id: 2, image: '/1 (2).jpg', alt: 'Look Bem Zânza 2' },
     { id: 3, image: '/1 (3).jpg', alt: 'Look Bem Zânza 3' },
     { id: 4, image: '/1 (4).jpg', alt: 'Look Bem Zânza 4' },
-    { id: 5, image: '/1 (5).jpg', alt: 'Look Bem Zânza 5' }
+    { id: 5, image: '/1 (5).jpg', alt: 'Look Bem Zânza 5' },
+    { id: 6, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.53.jpeg', alt: 'Look Bem Zânza 6' },
+    { id: 7, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.54 (2).jpeg', alt: 'Look Bem Zânza 7' },
+    { id: 8, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.54.jpeg', alt: 'Look Bem Zânza 8' },
+    { id: 9, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.55 (1).jpeg', alt: 'Look Bem Zânza 9' },
+    { id: 10, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.55 (2).jpeg', alt: 'Look Bem Zânza 10' },
+    { id: 11, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.55 (3).jpeg', alt: 'Look Bem Zânza 11' },
+    { id: 12, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.55.jpeg', alt: 'Look Bem Zânza 12' },
+    { id: 13, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.57 (1).jpeg', alt: 'Look Bem Zânza 13' },
+    { id: 14, image: '/fotos/WhatsApp Image 2026-07-23 at 13.59.59.jpeg', alt: 'Look Bem Zânza 14' },
+    { id: 15, image: '/fotos/WhatsApp Image 2026-07-23 at 14.00.30.jpeg', alt: 'Look Bem Zânza 15' }
   ];
 
   const testimonials = [
@@ -424,7 +472,32 @@ function App() {
             <p>Conheça a essência da Bem Zânza. Peças versáteis, confortáveis e atemporais, perfeitas para compor looks incríveis no dia a dia.</p>
           </div>
           
-          <div className="carousel-container">
+          <div className="carousel-container" style={{ position: 'relative' }}>
+            {showImageTip && (
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: '20px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  backgroundColor: '#1A2B4C',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '30px',
+                  zIndex: 20,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  pointerEvents: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                👆 Clique na imagem e veja em tela cheia
+              </div>
+            )}
             <button className="carousel-btn prev" onClick={scrollPrev} aria-label="Anterior">
               <ChevronLeft size={24} />
             </button>
@@ -478,28 +551,28 @@ function App() {
               <h3>Saias 100% Algodão</h3>
               <p>Caimento perfeito e frescor inigualável para compor looks elegantes.</p>
               <div className="category-img-wrapper">
-                <img src="/categorias/saia_final.png" alt="Saias 100% Algodão" />
+                <img src="/categorias/SAIA.png" alt="Saias 100% Algodão" />
               </div>
             </div>
             <div className="category-card">
               <h3>Camisetas 100% Algodão</h3>
               <p>O básico essencial, com toque incrivelmente macio e durabilidade superior.</p>
               <div className="category-img-wrapper">
-                <img src="/categorias/camisa_final.png" alt="Camisetas 100% Algodão" />
+                <img src="/categorias/CAMISAS.png" alt="Camisetas 100% Algodão" />
               </div>
             </div>
             <div className="category-card">
               <h3>Calças</h3>
               <p>Modelagens atemporais e confortáveis que valorizam o corpo feminino.</p>
               <div className="category-img-wrapper">
-                <img src="/categorias/calça_final.png" alt="Calças" />
+                <img src="/categorias/CALCA.png" alt="Calças" />
               </div>
             </div>
             <div className="category-card">
               <h3>Broches Exclusivos</h3>
               <p>O detalhe indispensável que transforma e enriquece qualquer peça básica.</p>
               <div className="category-img-wrapper">
-                <img src="/categorias/broche_final.png" alt="Broches" style={{ objectPosition: 'center' }} />
+                <img src="/categorias/broche.png" alt="Broches" style={{ objectPosition: 'center' }} />
               </div>
             </div>
           </div>
@@ -651,7 +724,7 @@ function App() {
                 </div>
                 <div className="contact-details">
                   <h3>Endereço</h3>
-                  <p>Rua Eliza Whitaker • 59</p>
+                  <p>Rua Eliza Whitacker • 59</p>
                   <p>Térreo: Rua-E / Loja-36T</p>
                   <p>Brás, São Paulo, SP - 03009-000</p>
                 </div>
@@ -695,13 +768,13 @@ function App() {
             
             <div className="contact-map">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.905485997046!2d-46.624209422921794!3d-23.53590156066052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce592b876d75ad%3A0xed6723b857cc7f7c!2sBem%20Zânza%20%7C%20Moda%20Feminina!5e0!3m2!1spt-BR!2sbr!4v1782321851154!5m2!1spt-BR!2sbr" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.9053486483926!2d-46.6216345!3d-23.535906499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce592b876d75ad%3A0xed6723b857cc7f7c!2sBem%20Z%C3%A2nza%20%7C%20Moda%20Feminina!5e0!3m2!1spt-BR!2sbr!4v1784835461940!5m2!1spt-BR!2sbr" 
                 width="100%" 
                 height="100%" 
                 style={{border: 0, borderRadius: '20px', minHeight: '400px'}} 
                 allowFullScreen="" 
                 loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
+                referrerPolicy="strict-origin-when-cross-origin"
                 title="Localização Bem Zânza"
               ></iframe>
             </div>
@@ -742,7 +815,7 @@ function App() {
                 <li>Sábado: 09h às 13h</li>
                 <li><br/></li>
                 <li><strong>📍 Loja Física</strong></li>
-                <li>Rua Eliza Whitaker • 59</li>
+                <li>Rua Eliza Whitacker • 59</li>
                 <li>Térreo: Rua-E / Loja-36T</li>
                 <li>São Paulo, SP - 03009-000</li>
                 <li><br/></li>
